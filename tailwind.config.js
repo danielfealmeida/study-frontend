@@ -10,6 +10,7 @@ export default {
       colors: {
         'highlight-gray': 'rgb(240 240 252)',
         'highlight-dark': 'rgb(55 51 50)',
+        'dark-line': "#373C3E"
       },
     },
   },
