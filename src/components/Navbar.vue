@@ -2,12 +2,13 @@
 import {useDark, useToggle} from "@vueuse/core"
 
 let isDark = useDark();
-console.log(isDark)
 const toggleDark = useToggle(isDark);
 
 export default {
-    props: {
-        isDark
+    data () {
+        return {
+            isDark
+        }
     },
     methods: {
         changeMode: function() {
@@ -22,7 +23,7 @@ export default {
         <div class="w-10 h-10 bg-blue-500 my-auto mr-auto ml-20"></div>
         <div class="h-10 my-auto mx-auto text-center align-middle inline-block content-center"><p>Página inicial</p></div>
         <div class="h-10 my-auto mx-auto text-center align-middle inline-block content-center"><p>Sobre</p></div>
-        <div class="h-10 my-auto mx-auto text-center align-middle inline-block content-center"><button @click="changeMode()">Tema</button></div>
+        <div class="h-10 my-auto mx-auto text-center align-middle inline-block content-center"><button @click="changeMode()">{{ isDark ? "🌙" : "☀️" }}</button></div>
     </div>
 </template>
 
