@@ -20,7 +20,7 @@
 
 <template>
     <div class="navx fixed left-0 top-0 w-screen border-b-2 border-stone-200 flex flex-row dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line">
-        <div class="w-10 h-10 bg-blue-500 my-auto mr-auto ml-20"></div>
+        <img src="../assets/small-logo.png" alt="saiba-mais-logo" class="logo my-auto mx-20 translate-x--1/2 translate-y--1/2">
         <div class="h-10 my-auto mx-auto text-center align-middle inline-block content-center"><a href="/">Página inicial</a></div>
         <div class="h-10 my-auto mx-auto text-center align-middle inline-block content-center"><a href="/app">Aplicativo</a></div>
         <div class="h-10 my-auto mx-auto text-center align-middle inline-block content-center"><button @click="changeMode()">{{ isDark ? "🌙" : "☀️" }}</button></div>
@@ -30,5 +30,8 @@
 <style lang="css">
     .navx {
         height: 8vh;
+    }
+    .logo {
+        height: 7vh;
     }
 </style>
