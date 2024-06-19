@@ -1,5 +1,6 @@
 <script>
-    import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
+    import {signInWithEmailAndPassword} from "firebase/auth"
+    import { auth } from "../firebaseInit.ts"
     import router from "../router/index.ts";
 
     let email, password = "";
@@ -14,8 +15,8 @@
         },
         methods: {
             sendData: function(e, p) {
-                signInWithEmailAndPassword(getAuth(), e, p).then((data) => {
-                    console.log(data);
+                signInWithEmailAndPassword(auth, e, p).then((data) => {
+                    // console.log(data);
                     router.push("/app");
                 }).catch((error) => {
                     console.log(error)
