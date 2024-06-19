@@ -1,5 +1,9 @@
 <script>
+    import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
+    import router from "../router/index.ts";
+
     let email, password = "";
+    let errorCode = "";
 
     export default {
         data () {
@@ -10,7 +14,14 @@
         },
         methods: {
             sendData: function(e, p) {
-                console.log(e + " " + p)
+                signInWithEmailAndPassword(getAuth(), e, p).then((data) => {
+                    console.log(data);
+                    router.push("/app");
+                }).catch((error) => {
+                    console.log(error)
+                    errorCode = "Usuário ou senha inválidos."
+                    alert(errorCode)
+                })
             }
         }
     }
