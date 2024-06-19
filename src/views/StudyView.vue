@@ -4,10 +4,19 @@
   import SideNav from "../components/SideNav.vue"
   import SideMenu from "../components/SideMenu.vue"
 
+  import Notes from "../tabs/Notes.vue"
+  import Forum from "../tabs/Forum.vue"
+  import Questions from "../tabs/Questions.vue"
+  import Profile from "../tabs/Profile.vue"
+
   export default {
     components: {
       SideNav,
-      SideMenu
+      SideMenu,
+      Notes,
+      Forum,
+      Questions,
+      Profile
     },
     data() {
       return {
@@ -20,10 +29,10 @@
 <template>
   <SideNav/>
   <div class="body">
-    <div v-if="store.selected=='notes'">Anotações</div>
-    <div v-if="store.selected=='forum'">Fórum</div>
-    <div v-if="store.selected=='questions'">Questões</div>
-    <div v-if="store.selected=='profile'">Perfil</div>
+    <div v-if="store.selected=='notes'"><Notes/></div>
+    <div v-if="store.selected=='forum'"><Forum/></div>
+    <div v-if="store.selected=='questions'"><Questions/></div>
+    <div v-if="store.selected=='profile'"><Profile/></div>
   </div>
   <SideMenu/>
 </template>
