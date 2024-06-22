@@ -10,7 +10,8 @@
         data () {
             return {
                 email,
-                password
+                password,
+                errorCode
             }
         },
         methods: {
@@ -21,7 +22,6 @@
                 }).catch((error) => {
                     // console.log(error)
                     this.errorCode = "Usuário ou senha inválidos."
-                    alert(errorCode)
                 })
             }
         }
