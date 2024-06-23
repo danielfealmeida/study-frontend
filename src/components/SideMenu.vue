@@ -18,10 +18,13 @@
     }
 
     // Gets all tasks that the user has ever made and then goes through them, saving all of their data to the tasks array
-    let queryTasks = await getDocs(query(collection(db, "tasks"), where("user", "==", (await getCurrentUser()).uid)))
-    queryTasks.forEach((task) => {
-        tasks.push(task.data())
-    })
+    let queryTasks;
+    if(await getCurrentUser()) {
+        queryTasks = await getDocs(query(collection(db, "tasks"), where("user", "==", (await getCurrentUser()).uid)))
+        queryTasks.forEach((task) => {
+            tasks.push(task.data())
+        })
+    }
 
     export default {
         data() {
