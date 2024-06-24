@@ -1,13 +1,12 @@
 <script>
     import { auth, db } from "../firebaseInit"
     import { onAuthStateChanged } from "firebase/auth"
-    import { addDoc, collection, query, where, getDocs } from "firebase/firestore"
+    import { addDoc, collection, query, where, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore"
 
     let tasks = []
     let uncompletedTasks = []
     let completedTasks = []
 
-    // Reffer to comment on router code
     const getCurrentUser = () => {
         return new Promise((resolve, reject) => {
             const removeListerner = onAuthStateChanged(auth, (user) => {
@@ -17,14 +16,7 @@
         })
     }
 
-    // Gets all tasks that the user has ever made and then goes through them, saving all of their data to the tasks array
     let queryTasks;
-    if(await getCurrentUser()) {
-        queryTasks = await getDocs(query(collection(db, "tasks"), where("user", "==", (await getCurrentUser()).uid)))
-        queryTasks.forEach((task) => {
-            tasks.push(task.data())
-        })
-    }
 
     export default {
         data() {
@@ -36,7 +28,7 @@
             }
         },
         created() {
-            this.cycleTasks()
+            this.getTasks()
         },
         methods: {
             // This function deletes the current uncompleted and completed tasks, then adds them back from a more recent tasks array
@@ -51,19 +43,33 @@
                     }
                 })
             },
-            changeCompletion: function(task) {
-                task.completion = !task.completion
-                this.cycleTasks();
+            // Gets all tasks that the user has ever made and then goes through them, saving all of their data to the tasks array
+            // This works decently well, but it seems to me like making so many API calls for every user may become a problem once the app goes to production
+            getTasks: async function() {
+                if(await getCurrentUser()) {
+                    queryTasks = await getDocs(query(collection(db, "tasks"), where("user", "==", (await getCurrentUser()).uid)))
+                    queryTasks.forEach((task) => {
+                        let addedTask = task.data()
+                        addedTask.fid = task.id
+                        tasks.push(addedTask)
+                    })
+                }
+                this.cycleTasks()
             },
-            addTask: function(content) {
-                let addedTask = {content, completion:false, id:tasks.length, user: auth.currentUser.uid}
-                tasks.push(addedTask)
-                this.uncompletedTasks.push(addedTask)
-                addDoc(collection(db, "tasks"), addedTask)
+            changeCompletion: async function(task) {
+                tasks = []
+                updateDoc(doc(db, "tasks", task.fid), {completion: !task.completion})
+                this.getTasks()
+            },
+            addTask: async function(content) {
+                tasks = []
+                addDoc(collection(db, "tasks"), {content, completion:false, id:tasks.length, user: auth.currentUser.uid})
+                this.getTasks()
             },
             removeTask: function(task) {
                 tasks = tasks.filter(e => e.id !== task.id)
-                this.cycleTasks();
+                deleteDoc(doc(db, "tasks", task.fid))
+                this.getTasks()
             }
         }
     }
@@ -81,7 +87,7 @@
             <div class="flex flex-col">
                 <div class="uncompleted">
                     <div v-for="task in uncompletedTasks" :key="task" class="p-1 w-10/12 mx-auto text-sm flex flex-row">
-                        <input type="checkbox" @click="changeCompletion(task)" v-model="task.completion" class="w-5 h-5 appearance-none border-2 border-stone-200 rounded-full dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line checked:bg-pink-600"/>
+                        <input type="checkbox" @click="changeCompletion(task)" v-model="task.completion" class="w-5 h-5 appearance-none border-2 border-stone-200 rounded-full dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line"/>
                         <p class="text-sm ml-2">{{ task.content }}</p>
                         <button @click="removeTask(task)" class="ml-auto text-red-500">×</button>
                     </div> 
