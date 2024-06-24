@@ -25,10 +25,22 @@
                 uncompletedTasks,
                 completedTasks,
                 newTask: "",
+                active: false,
+                timer: 10,
+                timeSelected: 5,
+                inputed: "",
+                styleCount: 0
             }
         },
         created() {
             this.getTasks()
+            setInterval(() => {
+                if(this.timer > 0) {
+                    this.timer--
+                } else {
+                    this.styleCount++
+                }
+            }, 1000)
         },
         methods: {
             // This function deletes the current uncompleted and completed tasks, then adds them back from a more recent tasks array
@@ -70,6 +82,11 @@
                 tasks = tasks.filter(e => e.id !== task.id)
                 deleteDoc(doc(db, "tasks", task.fid))
                 this.getTasks()
+            },
+            pad: function(number, size) {
+                var s = String(number);
+                while (s.length < (size || 2)) {s = "0" + s;}
+                return s;
             }
         }
     }
@@ -102,7 +119,19 @@
                 </div>
             </div>
         </div>
-        <div v-if="opened=='pomodoro'" class="mt-5">Pomodoro</div>
+        <div v-if="opened=='pomodoro'" class="mt-5">
+            <h1 class="mb-5 mt-1">Temporizador</h1>
+            <button class="w-32 h-32 rounded-full border-2 border-stone-200 dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-l-1 dark:border-dark-line" :style="timer==0 && styleCount%2==0 && active ? {background: 'rgb(239 68 68)'} : '' " @click="active = !active; timer = timeSelected">{{ active ? (pad(Math.floor(timer/60), 2) + ":" + pad(Math.round(60*(timer/60 - Math.floor(timer/60))), 2)) : "Iniciar" }}</button>
+            <h2 class="mt-2">Tempo (em minutos):</h2>
+            <div class="w-10/12 mt-2 flex flex-row flex-wrap mx-auto">
+                <button class="w-14 h-14 mx-1 my-1 text-sm text-center rou border-2 border-stone-200 rounded-full dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line focus:bg-stone-200 dark:focus:bg-dark-line" @click="timeSelected = 600">10</button>
+                <button class="w-14 h-14 mx-1 my-1 text-sm text-center border-2 border-stone-200 rounded-full dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line focus:bg-stone-200 dark:focus:bg-dark-line" @click="timeSelected = 1200">20</button>
+                <button class="w-14 h-14 mx-1 my-1 text-sm text-center border-2 border-stone-200 rounded-full dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line focus:bg-stone-200 dark:focus:bg-dark-line" @click="timeSelected = 1800">30</button>
+            </div>
+            <div>
+                <input type="text" class="w-4/5 h-8 mx-auto mt-1 text-center text-sm border-2 border-stone-200 rounded-full dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line focus:bg-stone-200 dark:focus:bg-dark-line" v-model="inputed" @change="timeSelected = inputed*60" placeholder="..."/>
+            </div>
+        </div>
     </div>
 </template>
 
