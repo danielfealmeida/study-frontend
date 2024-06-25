@@ -74,9 +74,11 @@
                 this.getTasks()
             },
             addTask: async function(content) {
-                tasks = []
-                addDoc(collection(db, "tasks"), {content, completion:false, id:tasks.length, user: auth.currentUser.uid})
-                this.getTasks()
+                if(content) {
+                    tasks = []
+                    addDoc(collection(db, "tasks"), {content, completion:false, id:tasks.length, user: auth.currentUser.uid})
+                    this.getTasks()
+                }
             },
             removeTask: function(task) {
                 tasks = tasks.filter(e => e.id !== task.id)
@@ -136,7 +138,7 @@
                 <button class="w-14 h-14 mx-1 my-1 text-sm text-center border-2 border-stone-200 rounded-full dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line focus:bg-stone-200 dark:focus:bg-dark-line" @click="timeSelected = 1800">30</button>
             </div>
             <div>
-                <input type="text" class="w-4/5 h-8 mx-auto mt-1 text-center text-sm border-2 border-stone-200 rounded-full dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line focus:bg-stone-200 dark:focus:bg-dark-line" v-model="inputed" @change="timeSelected = Math.round(inputed*60)" placeholder="..."/>
+                <input type="number" class="w-4/5 h-8 mx-auto mt-1 text-center text-sm border-2 border-stone-200 rounded-full dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line focus:bg-stone-200 dark:focus:bg-dark-line" v-model="inputed" @change="timeSelected = Math.round(inputed*60)" placeholder="..."/>
             </div>
         </div>
     </div>
