@@ -39,8 +39,8 @@
 
 <style>
   .body {
-    padding-top: 9rem;
+    padding-top: 8rem;
     padding-left: 16rem;
-    padding-right: 20rem;
+    padding-right: 16rem;
   }
 </style>
