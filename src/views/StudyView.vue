@@ -8,6 +8,8 @@
   import Forum from "../tabs/Forum.vue"
   import Questions from "../tabs/Questions.vue"
   import Profile from "../tabs/Profile.vue"
+  import Answer from "../tabs/Answer.vue"
+  import ViewQuestion from "../tabs/ViewQuestion.vue"
 
   export default {
     components: {
@@ -16,7 +18,9 @@
       Notes,
       Forum,
       Questions,
-      Profile
+      Profile,
+      Answer,
+      ViewQuestion
     },
     data() {
       return {
@@ -33,6 +37,8 @@
     <div v-if="store.selected=='forum'"><Forum/></div>
     <div v-if="store.selected=='questions'"><Questions/></div>
     <div v-if="store.selected=='profile'"><Profile/></div>
+    <div v-if="store.selected=='answer'"><Answer/></div>
+    <div v-if="store.selected=='viewQuestion'"><Answer/></div>
   </div>
   <SideMenu/>
 </template>
