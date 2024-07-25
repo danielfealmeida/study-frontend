@@ -1,5 +1,5 @@
 <script>
-  import { store } from "../store/store"
+  import store from "../store/store"
 
   import SideNav from "../components/SideNav.vue"
   import SideMenu from "../components/SideMenu.vue"

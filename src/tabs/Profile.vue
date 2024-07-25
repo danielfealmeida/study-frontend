@@ -1,7 +1,7 @@
 <script>
     import { auth } from "../firebaseInit.ts"
     import router from "../router/index.ts"
-    import {store} from "../store/store.ts"
+    import store from "../store/store.ts"
 
     let user;
 
