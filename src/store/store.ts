@@ -4,5 +4,6 @@ let store;
 
 export default store = reactive({
     selected: "notes",
-    questions: []
+    questions: [],
+    allQuestions: []
 })

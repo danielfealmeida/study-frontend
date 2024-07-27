@@ -1,7 +1,7 @@
 <script>   
     import store from "../store/store"
 
-    let questions = [{title: "Questão 1", subjects:["Literatura", "Romantismo", "Século XIX", "Brasil"], selected: false, answers:[{id:"a", content:"América colonial", correct:false},{id:"b", content:"América espanhola", correct:true},{id:"c", content:"América portuguesa", correct:false},{id:"d", content:"América francesa", correct:false}]},{title: "Questão 2", subjects:["Literatura", "Romantismo", "Século XIX", "Brasil"], selected: false, answers:[{id:"a", content:"América colonial", correct:false},{id:"b", content:"América espanhola", correct:true},{id:"c", content:"América portuguesa", correct:false},{id:"d", content:"América francesa", correct:false},]}]
+    let questions = store.allQuestions
 
     export default {
         data() {
@@ -33,7 +33,7 @@
             <h1 class="mt-3 mb-3 font-semibold text-wrap truncate">{{ question.title }}</h1>
         </div>
     </div>
-    <div class="questionlist absolute w-40 right-60 border-l-2 border-stone-200 dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line pt-3 pl-3">
+    <div class="questionlist fixed w-40 right-60 border-l-2 border-stone-200 dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line pt-3 pl-3">
         <div v-for="question in questions.filter((question) => {return question.selected})" :key="question" class="text-nowrap overflow-x-scroll h-12 m-2">
             <button @click="question.selected = false" class="ml-auto text-red-500">×</button>
             {{question.title}}

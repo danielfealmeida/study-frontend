@@ -1,5 +1,7 @@
 <script>
   import store from "../store/store"
+  import { db } from "../firebaseInit.ts"
+  import { getDocs, collection } from "firebase/firestore"
 
   import SideNav from "../components/SideNav.vue"
   import SideMenu from "../components/SideMenu.vue"
@@ -26,7 +28,19 @@
       return {
           store
       }
-    },  
+    },
+    mounted() {
+      this.getQuestions()
+    },
+    methods: {
+      // This code pulls all the questions from the database once the app is loaded to prevent multiple calls to the database
+      getQuestions: async function() {
+          let snapshot = await getDocs(collection(db, "questions"))
+          snapshot.forEach((doc) => {
+              store.allQuestions.push(doc.data())
+          })
+      }
+    }
   }
 </script>
 
