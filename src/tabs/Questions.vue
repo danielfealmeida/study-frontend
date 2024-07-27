@@ -1,7 +1,7 @@
 <script>   
     import store from "../store/store"
 
-    let questions = [{title: "Questão 1", subjects:["Literatura", "Romantismo", "Século XIX", "Brasil"], selected: false, answers:[{id:"a", content:"América colonial"},{id:"b", content:"América espanhola"}]}]
+    let questions = [{title: "Questão 1", subjects:["Literatura", "Romantismo", "Século XIX", "Brasil"], selected: false, answers:[{id:"a", content:"América colonial", correct:false},{id:"b", content:"América espanhola", correct:true},{id:"c", content:"América portuguesa", correct:false},{id:"d", content:"América francesa", correct:false}]},{title: "Questão 2", subjects:["Literatura", "Romantismo", "Século XIX", "Brasil"], selected: false, answers:[{id:"a", content:"América colonial", correct:false},{id:"b", content:"América espanhola", correct:true},{id:"c", content:"América portuguesa", correct:false},{id:"d", content:"América francesa", correct:false},]}]
 
     export default {
         data() {
@@ -12,8 +12,10 @@
         },
         methods: {
             startQuestions: function() {
-                store.questions = questions.filter((question) => {return question.selected})
-                store.selected = "answer"
+                if(questions.filter((question) => {return question.selected}).length != 0) {
+                    store.questions = questions.filter((question) => {return question.selected})
+                    store.selected = "answer"
+                }
             }
         }
     }
