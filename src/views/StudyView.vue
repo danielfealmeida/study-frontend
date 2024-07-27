@@ -11,7 +11,6 @@
   import Questions from "../tabs/Questions.vue"
   import Profile from "../tabs/Profile.vue"
   import Answer from "../tabs/Answer.vue"
-  import ViewQuestion from "../tabs/ViewQuestion.vue"
 
   export default {
     components: {
@@ -22,7 +21,6 @@
       Questions,
       Profile,
       Answer,
-      ViewQuestion
     },
     data() {
       return {
