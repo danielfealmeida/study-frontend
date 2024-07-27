@@ -41,7 +41,7 @@
 </script>
 
 <template>
-    <div class="tab p-10 w-11/12 border-2 rounded-md border-stone-200 rounded-sm dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line flex flex-col" v-if="isRunning">
+    <div class="tab p-10 mb-10 w-11/12 border-2 rounded-md border-stone-200 rounded-sm dark:bg-stone-800 dark:text-white dark:border-b-1 dark:border-dark-line flex flex-col" v-if="isRunning">
         <h1 class="text-lg font-bold mb-5">{{ selectedQuestions[currentQuestion].title }}</h1>
         <img v-for="image in selectedQuestions[currentQuestion].images" :src="image" :key="image" class="mb-5 max-w-xl mx-auto">
         <button class="text-md text-left p-3 mb-5 cursor-pointer w-11/12 border-2 rounded-lg border-stone-200 rounded-sm dark:text-white dark:border-b-1 dark:border-dark-line" :class="{'bg-green-500 text-white':answer.correct && clicked, 'bg-red-500 text-white':!answer.correct && clicked}" v-for="answer in selectedQuestions[currentQuestion].answers" :key="answer" @click="checkRight(answer)">
