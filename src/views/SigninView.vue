@@ -1,6 +1,7 @@
 <script>
     import {createUserWithEmailAndPassword} from "firebase/auth"
-    import { auth } from "../firebaseInit.ts"
+    import { auth, db } from "../firebaseInit.ts"
+    import { collection, addDoc } from "firebase/firestore"
     import router from "../router/index.ts";
 
     let email, password = "";
@@ -17,10 +18,9 @@
         methods: {
             sendData: function(e, p) {
                 createUserWithEmailAndPassword(auth, e, p).then((data) => {
-                    // console.log(data);
+                    addDoc(collection(db, "users"), {email: e, uid:data.user.uid})
                     router.push("/app");
                 }).catch((error) => {
-                    // console.log(error)
                     if(error.code == "auth/email-already-in-use") {
                         this.errorCode = "A conta já existe."
                     } else {
