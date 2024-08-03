@@ -35,7 +35,9 @@
       getQuestions: async function() {
           let snapshot = await getDocs(collection(db, "questions"))
           snapshot.forEach((doc) => {
-              store.allQuestions.push(doc.data())
+              let addedDoc = doc.data()
+              addedDoc.id = doc.id
+              store.allQuestions.push(addedDoc)
           })
       }
     }
